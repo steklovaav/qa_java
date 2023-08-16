@@ -1,14 +1,13 @@
 import com.example.Cat;
 import com.example.Feline;
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
+import static org.junit.Assert.assertThrows;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CatTest {
@@ -32,17 +31,13 @@ public class CatTest {
         Mockito.verify(feline, Mockito.times(1)).eatMeat();
     }
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
     @Test
     public void getFoodException() throws Exception {
         Cat cat = new Cat(feline);
         String message = "Тестовый эксепшн";
-        exception.expect(Exception.class);
-        exception.expectMessage(message);
         Exception e = new Exception(message);
         Mockito.when(feline.eatMeat()).thenThrow(e);
-        cat.getFood();
+        assertThrows(message,Exception.class, cat::getFood);
         Mockito.verify(feline, Mockito.times(1)).eatMeat();
     }
 

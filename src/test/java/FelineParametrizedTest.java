@@ -4,22 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
 @RunWith(Parameterized.class)
 public class FelineParametrizedTest {
     private final int kittensCount;
-
-    @Spy
-    Feline feline;
-
-
-    @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     public FelineParametrizedTest(int kittensCount) {
         this.kittensCount = kittensCount;
@@ -34,7 +22,7 @@ public class FelineParametrizedTest {
 
     @Test
     public void getKittensWithArgs() {
+        Feline feline = new Feline();
         Assert.assertEquals(kittensCount, feline.getKittens(kittensCount));
-        Mockito.verify(feline, Mockito.atLeastOnce()).getKittens(kittensCount);
     }
 }
